@@ -75,3 +75,19 @@
     font-size: 28px;
     color: white;
 }
+
+.volumeControl {
+    margin-top: 20px;
+    text-align: center;
+    color: #b3b3b3;
+}
+
+.volumeControl p {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+}
+
+.volumeSlider {
+    width: 100%;
+    cursor: pointer;
+}
