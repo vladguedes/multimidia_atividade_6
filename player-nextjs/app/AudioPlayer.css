@@ -53,41 +53,58 @@
 
 .controls {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; 
     align-items: center;
     padding: 10px 0;
 }
 
-.controls svg {
-
-    height: 22px; 
+.playBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background-color: #e50914;
+    border-radius: 50%;
     cursor: pointer;
-    color: #b3b3b3;
 }
 
 .playBtn svg {
-
     height: 28px;
     color: white;
 }
 
-.playBtn svg {
-    font-size: 28px;
-    color: white;
-}
 
 .volumeControl {
-    margin-top: 20px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    margin-top: 15px;
     color: #b3b3b3;
 }
 
 .volumeControl p {
-    margin: 0 0 10px 0;
+    margin: 0;
     font-size: 14px;
+    width: 100px; 
+    text-align: right;
 }
 
 .volumeSlider {
-    width: 100%;
+    flex-grow: 1; 
     cursor: pointer;
+}
+
+.iconBtn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.iconBtn svg {
+    height: 22px;
 }

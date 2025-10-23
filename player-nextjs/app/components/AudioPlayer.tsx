@@ -1,37 +1,68 @@
-// app/components/AudioPlayer.tsx
+'use client'; 
 
-'use client';
 
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
-
-
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 
 export default function AudioPlayer() {
 
-  const [isPlaying, setIsPlaying] = useState<boolean | null>(null);
-  const [volume, setVolume] = useState<number | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(0.5);     
+  const [isMuted, setIsMuted] = useState(false);    
+
+
+  const audioRef = useRef<HTMLAudioElement>(null);
 
 
   useEffect(() => {
-    setIsPlaying(false); 
-    setVolume(0.5);      
-  }, []);
+
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.play();
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [isPlaying]); 
+
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume; 
+    }
+  }, [volume]); 
+
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.muted = isMuted; 
+    }
+  }, [isMuted]); 
 
 
   const togglePlay = () => {
-
     setIsPlaying(prev => !prev);
   };
-  
 
-  if (isPlaying === null || volume === null) {
-    return null; 
-  }
+  const toggleMute = () => {
+    setIsMuted(prev => !prev);
+  };
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setVolume(parseFloat(e.target.value));
+  };
 
   return (
     <div className="audioPlayer">
+      
+      {}
+      <audio 
+        ref={audioRef} 
+        src="/audio/minha-musica.mp3" 
+        preload="auto"
+      />
+
       <Image
         src="/album-art.jpg"
         alt="Capa do álbum"
@@ -41,7 +72,7 @@ export default function AudioPlayer() {
       />
       
       <div className="trackInfo">
-        <h2>Here Comes The Sun</h2>
+        <h2>Here Come The Sun</h2>
         <p>Beatles</p>
       </div>
 
@@ -55,30 +86,30 @@ export default function AudioPlayer() {
       
       {}
       <div className="controls">
-        {}
-        <VolumeX size={22} />
-        
-        {}
         <div className="playBtn" onClick={togglePlay}>
-          {isPlaying ? <Pause size={8} /> : <Play size={28} />}
+          {isPlaying ? <Pause size={28} /> : <Play size={28} />}
         </div>
-
-        {}
-        <Volume2 size={22} />
       </div>
 
       {}
       <div className="volumeControl">
-        <p>Volume: {Math.round(volume * 100)}%</p>
+        
+        {}
+        <button onClick={toggleMute} className="iconBtn">
+          {isMuted ? <VolumeX size={22} /> : <Volume2 size={22} />}
+        </button>
+
+        {}
         <input 
           type="range"
           min="0"
           max="1"
           step="0.01"
           value={volume}
-          onChange={(e) => setVolume(parseFloat(e.target.value))}
+          onChange={handleVolumeChange}
           className="volumeSlider"
         />
+        <p>Volume: {Math.round(volume * 100)}%</p>
       </div>
     </div>
   );
